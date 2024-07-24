@@ -1,6 +1,6 @@
 from peewee import SqliteDatabase, Model, CharField, ForeignKeyField
 
-db = SqliteDatabase('mydatabase.db')
+db = SqliteDatabase("mydatabase.db")
 
 
 class BaseModel(Model):
@@ -23,8 +23,8 @@ class Device(BaseModel):
     type = CharField(max_length=100)
     login = CharField(max_length=100)
     password = CharField(max_length=100)
-    location = ForeignKeyField(Location, backref='devices', on_delete='CASCADE')
-    api_user = ForeignKeyField(ApiUser, backref='devices', on_delete='CASCADE')
+    location = ForeignKeyField(Location, backref="devices", on_delete="CASCADE")
+    api_user = ForeignKeyField(ApiUser, backref="devices", on_delete="CASCADE")
 
 
 # def create_tables():
