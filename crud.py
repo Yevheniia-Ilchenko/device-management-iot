@@ -35,3 +35,14 @@ async def get_device(request):
         return web.json_response(model_to_dict(device))
     else:
         return web.json_response({"error": "Device not found"}, status=404)
+
+
+async def update_device(request):
+    device_id = request.match_info["id"]
+    data = await request.json()
+    query = Device.update(**data).where(Device.id == device_id)
+    if query.execute():
+        device = Device.get_by_id(device_id)
+        return web.json_response(model_to_dict(device))
+    else:
+        return web.json_response({"error": "Device not found"}, status=404)
