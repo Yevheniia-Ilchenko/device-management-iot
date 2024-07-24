@@ -1,5 +1,4 @@
-from peewee import *
-
+from peewee import SqliteDatabase, Model, CharField, ForeignKeyField
 
 db = SqliteDatabase('mydatabase.db')
 
