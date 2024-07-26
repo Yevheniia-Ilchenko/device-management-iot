@@ -5,6 +5,11 @@ from aiohttp import web
 
 async def create_device(request):
     data = await request.json()
+    required_keys = ["name", "type", "login", "password", "location_id", "api_user_id"]
+
+    for key in required_keys:
+        if key not in data:
+            return web.json_response({"error": f"Missing key: {key}"}, status=400)
     device = Device.create(
         name=data["name"],
         type=data["type"],
@@ -55,3 +60,21 @@ async def delete_device(request):
         return web.json_response({"message": "Device deleted"})
     else:
         return web.json_response({"error": "Device not found"}, status=404)
+
+
+async def create_location(request):
+    data = await request.json()
+    location = Location.create(
+        name=data["name"]
+    )
+    return web.json_response(model_to_dict(location))
+
+
+async def create_user(request):
+    data = await request.json()
+    user = ApiUser.create(
+        name=data["name"],
+        email=data["email"],
+        password=data["password"],
+    )
+    return web.json_response(model_to_dict(user))
