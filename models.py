@@ -1,6 +1,13 @@
-from peewee import SqliteDatabase, Model, CharField, ForeignKeyField
+from peewee import Model, CharField, ForeignKeyField, PostgresqlDatabase
 
-db = SqliteDatabase("mydatabase.db")
+
+db = PostgresqlDatabase(
+    'device',
+    user='postgres',
+    password='postgres',
+    host='localhost',
+    port=5432
+)
 
 
 class BaseModel(Model):
@@ -33,4 +40,6 @@ class Device(BaseModel):
 #
 #
 # if __name__ == "__main__":
+#     db.connect()
 #     create_tables()
+#     db.close()
