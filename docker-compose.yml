@@ -8,12 +8,16 @@ services:
       - "8000:8000"
     volumes:
       - ./:/app
-    command: >
-      sh -c "python app.py"
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+#    entrypoint: [ "sh", "-c", "/usr/local/bin/wait-for-it.sh db:5432 --" ]
+#    command: [ "python", "app.py", "--host", "0.0.0.0", "--port", "8000" ]
+    command: >
+      sh -c "python app.py --host 0.0.0.0 --port 8000"
+
 
   db:
     image: postgres:14-alpine
@@ -21,3 +25,8 @@ services:
       - "5433:5432"
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
