@@ -13,10 +13,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-#    entrypoint: [ "sh", "-c", "/usr/local/bin/wait-for-it.sh db:5432 --" ]
-#    command: [ "python", "app.py", "--host", "0.0.0.0", "--port", "8000" ]
     command: >
-      sh -c "python app.py --host 0.0.0.0 --port 8000"
+      sh -c "python models.py && python app.py --host 0.0.0.0 --port 8000"
 
 
   db:
