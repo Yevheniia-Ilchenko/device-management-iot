@@ -46,3 +46,12 @@ async def update_device(request):
         return web.json_response(model_to_dict(device))
     else:
         return web.json_response({"error": "Device not found"}, status=404)
+
+
+async def delete_device(request):
+    device_id = request.match_info["id"]
+    query = Device.delete().where(Device.id == device_id)
+    if query.execute():
+        return web.json_response({"message": "Device deleted"})
+    else:
+        return web.json_response({"error": "Device not found"}, status=404)
